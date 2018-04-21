@@ -26,11 +26,20 @@ namespace Finances
 
     public IEnumerable<BaseTreeListNode> Children => _children;
 
+    protected virtual void OnNodeAdded(BaseTreeListNode node)
+    {
+    }
+
+    protected virtual void OnNodeRemoved(BaseTreeListNode node)
+    {
+    }
+
     public void Add(BaseTreeListNode node)
     {
       if (_children.Add(node))
       {
         node._parent = this;
+        OnNodeAdded(node);
       }
     }
 
@@ -44,6 +53,7 @@ namespace Finances
       if (_children.Remove(node))
       {
         node._parent = null;
+        OnNodeRemoved(node);
         return true;
       }
 

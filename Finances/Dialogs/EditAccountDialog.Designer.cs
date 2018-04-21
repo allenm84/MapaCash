@@ -1,6 +1,6 @@
 ﻿namespace Finances
 {
-  partial class CreateAccountDialog
+  partial class EditAccountDialog
   {
     /// <summary>
     /// Required designer variable.
@@ -29,30 +29,30 @@
     private void InitializeComponent()
     {
       this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
-      this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
-      this.txtName = new DevExpress.XtraEditors.TextEdit();
-      this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-      this.txtDescription = new DevExpress.XtraEditors.TextEdit();
-      this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-      this.numBalance = new DevExpress.XtraEditors.SpinEdit();
-      this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
-      this.cboType = new DevExpress.XtraEditors.ComboBoxEdit();
-      this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
-      this.btnCancel = new DevExpress.XtraEditors.SimpleButton();
-      this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
       this.btnOK = new DevExpress.XtraEditors.SimpleButton();
+      this.btnCancel = new DevExpress.XtraEditors.SimpleButton();
+      this.cboType = new DevExpress.XtraEditors.ComboBoxEdit();
+      this.numBalance = new DevExpress.XtraEditors.SpinEdit();
+      this.txtName = new DevExpress.XtraEditors.TextEdit();
+      this.txtDescription = new DevExpress.XtraEditors.TextEdit();
+      this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
+      this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+      this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+      this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
+      this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
+      this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
       this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
       this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
       this.layoutControl1.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.txtName.Properties)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.txtDescription.Properties)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.numBalance.Properties)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.cboType.Properties)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.numBalance.Properties)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.txtName.Properties)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.txtDescription.Properties)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
@@ -76,6 +76,70 @@
       this.layoutControl1.TabIndex = 0;
       this.layoutControl1.Text = "layoutControl1";
       // 
+      // btnOK
+      // 
+      this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+      this.btnOK.Location = new System.Drawing.Point(174, 108);
+      this.btnOK.Name = "btnOK";
+      this.btnOK.Size = new System.Drawing.Size(76, 22);
+      this.btnOK.StyleController = this.layoutControl1;
+      this.btnOK.TabIndex = 4;
+      this.btnOK.Text = "OK";
+      // 
+      // btnCancel
+      // 
+      this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+      this.btnCancel.Location = new System.Drawing.Point(254, 108);
+      this.btnCancel.Name = "btnCancel";
+      this.btnCancel.Size = new System.Drawing.Size(76, 22);
+      this.btnCancel.StyleController = this.layoutControl1;
+      this.btnCancel.TabIndex = 5;
+      this.btnCancel.Text = "Cancel";
+      // 
+      // cboType
+      // 
+      this.cboType.Location = new System.Drawing.Point(72, 36);
+      this.cboType.Name = "cboType";
+      this.cboType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+      this.cboType.Properties.Sorted = true;
+      this.cboType.Size = new System.Drawing.Size(258, 20);
+      this.cboType.StyleController = this.layoutControl1;
+      this.cboType.TabIndex = 1;
+      // 
+      // numBalance
+      // 
+      this.numBalance.EditValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+      this.numBalance.Location = new System.Drawing.Point(72, 84);
+      this.numBalance.Name = "numBalance";
+      this.numBalance.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+      this.numBalance.Properties.DisplayFormat.FormatString = "C2";
+      this.numBalance.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Custom;
+      this.numBalance.Size = new System.Drawing.Size(258, 20);
+      this.numBalance.StyleController = this.layoutControl1;
+      this.numBalance.TabIndex = 3;
+      // 
+      // txtName
+      // 
+      this.txtName.Location = new System.Drawing.Point(72, 12);
+      this.txtName.Name = "txtName";
+      this.txtName.Size = new System.Drawing.Size(258, 20);
+      this.txtName.StyleController = this.layoutControl1;
+      this.txtName.TabIndex = 0;
+      // 
+      // txtDescription
+      // 
+      this.txtDescription.Location = new System.Drawing.Point(72, 60);
+      this.txtDescription.Name = "txtDescription";
+      this.txtDescription.Size = new System.Drawing.Size(258, 20);
+      this.txtDescription.StyleController = this.layoutControl1;
+      this.txtDescription.TabIndex = 2;
+      // 
       // layoutControlGroup1
       // 
       this.layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
@@ -92,14 +156,6 @@
       this.layoutControlGroup1.Size = new System.Drawing.Size(342, 143);
       this.layoutControlGroup1.TextVisible = false;
       // 
-      // txtName
-      // 
-      this.txtName.Location = new System.Drawing.Point(72, 12);
-      this.txtName.Name = "txtName";
-      this.txtName.Size = new System.Drawing.Size(258, 20);
-      this.txtName.StyleController = this.layoutControl1;
-      this.txtName.TabIndex = 0;
-      // 
       // layoutControlItem1
       // 
       this.layoutControlItem1.Control = this.txtName;
@@ -108,14 +164,6 @@
       this.layoutControlItem1.Size = new System.Drawing.Size(322, 24);
       this.layoutControlItem1.Text = "Name:";
       this.layoutControlItem1.TextSize = new System.Drawing.Size(57, 13);
-      // 
-      // txtDescription
-      // 
-      this.txtDescription.Location = new System.Drawing.Point(72, 60);
-      this.txtDescription.Name = "txtDescription";
-      this.txtDescription.Size = new System.Drawing.Size(258, 20);
-      this.txtDescription.StyleController = this.layoutControl1;
-      this.txtDescription.TabIndex = 2;
       // 
       // layoutControlItem2
       // 
@@ -126,21 +174,6 @@
       this.layoutControlItem2.Text = "Description:";
       this.layoutControlItem2.TextSize = new System.Drawing.Size(57, 13);
       // 
-      // numBalance
-      // 
-      this.numBalance.EditValue = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-      this.numBalance.Location = new System.Drawing.Point(72, 84);
-      this.numBalance.Name = "numBalance";
-      this.numBalance.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-      this.numBalance.Size = new System.Drawing.Size(258, 20);
-      this.numBalance.StyleController = this.layoutControl1;
-      this.numBalance.TabIndex = 3;
-      // 
       // layoutControlItem3
       // 
       this.layoutControlItem3.Control = this.numBalance;
@@ -149,16 +182,6 @@
       this.layoutControlItem3.Size = new System.Drawing.Size(322, 24);
       this.layoutControlItem3.Text = "Balance:";
       this.layoutControlItem3.TextSize = new System.Drawing.Size(57, 13);
-      // 
-      // cboType
-      // 
-      this.cboType.Location = new System.Drawing.Point(72, 36);
-      this.cboType.Name = "cboType";
-      this.cboType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-      this.cboType.Size = new System.Drawing.Size(258, 20);
-      this.cboType.StyleController = this.layoutControl1;
-      this.cboType.TabIndex = 1;
       // 
       // layoutControlItem4
       // 
@@ -169,16 +192,6 @@
       this.layoutControlItem4.Text = "Type:";
       this.layoutControlItem4.TextSize = new System.Drawing.Size(57, 13);
       // 
-      // btnCancel
-      // 
-      this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.btnCancel.Location = new System.Drawing.Point(254, 108);
-      this.btnCancel.Name = "btnCancel";
-      this.btnCancel.Size = new System.Drawing.Size(76, 22);
-      this.btnCancel.StyleController = this.layoutControl1;
-      this.btnCancel.TabIndex = 5;
-      this.btnCancel.Text = "Cancel";
-      // 
       // layoutControlItem5
       // 
       this.layoutControlItem5.Control = this.btnCancel;
@@ -187,16 +200,6 @@
       this.layoutControlItem5.Size = new System.Drawing.Size(80, 27);
       this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
       this.layoutControlItem5.TextVisible = false;
-      // 
-      // btnOK
-      // 
-      this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-      this.btnOK.Location = new System.Drawing.Point(174, 108);
-      this.btnOK.Name = "btnOK";
-      this.btnOK.Size = new System.Drawing.Size(76, 22);
-      this.btnOK.StyleController = this.layoutControl1;
-      this.btnOK.TabIndex = 4;
-      this.btnOK.Text = "OK";
       // 
       // layoutControlItem6
       // 
@@ -215,7 +218,7 @@
       this.emptySpaceItem1.Size = new System.Drawing.Size(162, 27);
       this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
       // 
-      // CreateAccountDialog
+      // EditAccountDialog
       // 
       this.AcceptButton = this.btnOK;
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -224,18 +227,18 @@
       this.ClientSize = new System.Drawing.Size(342, 143);
       this.Controls.Add(this.layoutControl1);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-      this.Name = "CreateAccountDialog";
-      this.Text = "Create Account";
+      this.Name = "EditAccountDialog";
+      this.Text = "Edit Account";
       ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
       this.layoutControl1.ResumeLayout(false);
-      ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.txtName.Properties)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.txtDescription.Properties)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.numBalance.Properties)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.cboType.Properties)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.numBalance.Properties)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.txtName.Properties)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.txtDescription.Properties)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();

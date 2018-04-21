@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Finances
 {
-  public class PaycheckAccountNode : AccountTreeNode
+  public class AccountData
   {
   }
 }

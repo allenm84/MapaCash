@@ -8,6 +8,8 @@ namespace Finances
 {
   public class RecurringTransaction
   {
+    public string Name { get; set; }
+
     public DateTime StartDate { get; set; } 
     public DateTime EndDate { get; set; }
     public int Period { get; set; } = 1;

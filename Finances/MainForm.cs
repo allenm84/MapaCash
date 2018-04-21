@@ -12,6 +12,16 @@ namespace Finances
 {
   public partial class MainForm : BaseForm
   {
+    private Dictionary<AccountType, int> _accountImageIndex = new Dictionary<AccountType, int>
+    {
+      { AccountType.Checking, 4 },
+      { AccountType.CreditCard, 2 },
+      { AccountType.Expense, 5 },
+      { AccountType.Liability, 6 },
+      { AccountType.Income, 7 },
+      { AccountType.Savings, 3 },
+    };
+
     private TreeListNode _targetNode;
 
     public MainForm()
@@ -19,12 +29,12 @@ namespace Finances
       InitializeComponent();
     }
 
-    private bool TryGetTarget(out AccountTreeNode target)
+    private bool TryGetTarget(out AccountNode target)
     {
       target = null;
 
       var row = treeAccounts.GetDataRecordByNode(_targetNode);
-      if (row is GroupTreeNode node)
+      if (row is GroupNode node)
       {
         target = node;
       }
@@ -43,9 +53,9 @@ namespace Finances
 
     private void btnNewGroup_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
     {
-      var group = new GroupTreeNode();
+      var group = new GroupNode();
       group.Name = "<New Group>";
-      if (TryGetTarget(out AccountTreeNode parent))
+      if (TryGetTarget(out AccountNode parent))
       {
         parent.Add(group);
       }
@@ -55,18 +65,30 @@ namespace Finances
 
     private void btnNewAccount_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
     {
-      using (var dlg = new CreateAccountDialog())
+      using (var dlg = new EditAccountDialog())
       {
         if (dlg.ShowDialog(this) == DialogResult.OK)
         {
-          var node = dlg.CreateNode();
-          if (TryGetTarget(out AccountTreeNode parent))
+          var node = new AccountNode
+          {
+            Balance = dlg.Balance,
+            Description = dlg.Description,
+            Name = dlg.AccountName,
+            Type = dlg.Type
+          };
+
+          if (TryGetTarget(out AccountNode parent))
           {
             parent.Add(node);
           }
+
           nodeBindingSource.Add(node);
         }
       }
+    }
+
+    private void btnRecurringTransactions_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+    {
     }
 
     private void treeAccounts_FocusedNodeChanged(object sender, DevExpress.XtraTreeList.FocusedNodeChangedEventArgs e)
@@ -77,45 +99,15 @@ namespace Finances
     private void treeAccounts_GetStateImage(object sender, DevExpress.XtraTreeList.GetStateImageEventArgs e)
     {
       var data = treeAccounts.GetDataRecordByNode(e.Node);
-      if (data is AccountTreeNode node)
+      if (data is AccountNode node)
       {
-        switch (node)
+        if (node is GroupNode)
         {
-          case CheckingAccountNode checking:
-            {
-              e.NodeImageIndex = 4;
-              break;
-            }
-          case CreditCardAccountNode creditCard:
-            {
-              e.NodeImageIndex = 2;
-              break;
-            }
-          case ExpenseAccountNode expense:
-            {
-              e.NodeImageIndex = 5;
-              break;
-            }
-          case GroupTreeNode group:
-            {
-              e.NodeImageIndex = e.Node.Expanded ? 1 : 0;
-              break;
-            }
-          case LoanAccountNode loan:
-            {
-              e.NodeImageIndex = 6;
-              break;
-            }
-          case PaycheckAccountNode paycheck:
-            {
-              e.NodeImageIndex = 7;
-              break;
-            }
-          case SavingsAccountNode savings:
-            {
-              e.NodeImageIndex = 4;
-              break;
-            }
+          e.NodeImageIndex = e.Node.Expanded ? 1 : 0;
+        }
+        else
+        {
+          e.NodeImageIndex = _accountImageIndex[node.Type];
         }
       }
     }

@@ -8,8 +8,7 @@ namespace Finances
 {
   public enum RecurringDayOfMonth : int
   {
-    None = 0,
-    d1st,
+    d1st = 1,
     d2nd,
     d3rd,
     d4th,

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Finances
 {
-  public class AccountTreeNode : BaseTreeListNode
+  public class AccountNode : BaseTreeListNode
   {
     private string _name;
     public string Name
@@ -30,10 +30,26 @@ namespace Finances
       }
     }
 
+    private decimal _balance;
     public virtual decimal Balance
     {
-      get => 0;
-      set { }
+      get => _balance;
+      set
+      {
+        _balance = value;
+        FirePropertyChanged();
+      }
+    }
+
+    private AccountType _type;
+    public virtual AccountType Type
+    {
+      get => _type;
+      set
+      {
+        _type = value;
+        FirePropertyChanged();
+      }
     }
   }
 }

@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace Finances
 {
-  public class LoanAccountNode : AccountTreeNode
+  public enum AccountType
   {
+    Group,
+    Checking,
+    Savings,
+    CreditCard,
+    Expense,
+    Income,
+    Liability,
   }
 }

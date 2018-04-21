@@ -51,6 +51,7 @@
       this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
       this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
       this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
+      this.btnRecurringTransactions = new DevExpress.XtraBars.BarButtonItem();
       ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
       this.layoutControl1.SuspendLayout();
@@ -81,9 +82,10 @@
       this.barManager1.Form = this;
       this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.btnNewAccount,
-            this.btnNewGroup});
+            this.btnNewGroup,
+            this.btnRecurringTransactions});
       this.barManager1.MainMenu = this.bar2;
-      this.barManager1.MaxItemId = 2;
+      this.barManager1.MaxItemId = 3;
       // 
       // bar1
       // 
@@ -93,7 +95,8 @@
       this.bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
       this.bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnNewGroup, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnNewAccount, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnNewAccount, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnRecurringTransactions)});
       this.bar1.OptionsBar.AllowQuickCustomization = false;
       this.bar1.OptionsBar.DrawBorder = false;
       this.bar1.OptionsBar.DrawDragBorder = false;
@@ -241,7 +244,7 @@
       // 
       // nodeBindingSource
       // 
-      this.nodeBindingSource.DataSource = typeof(Finances.AccountTreeNode);
+      this.nodeBindingSource.DataSource = typeof(Finances.AccountNode);
       // 
       // imageCollection1
       // 
@@ -281,6 +284,13 @@
             new DevExpress.XtraBars.LinkPersistInfo(this.btnNewAccount)});
       this.popupMenu1.Manager = this.barManager1;
       this.popupMenu1.Name = "popupMenu1";
+      // 
+      // btnRecurringTransactions
+      // 
+      this.btnRecurringTransactions.Caption = "Recurring Transactions";
+      this.btnRecurringTransactions.Id = 2;
+      this.btnRecurringTransactions.Name = "btnRecurringTransactions";
+      this.btnRecurringTransactions.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnRecurringTransactions_ItemClick);
       // 
       // MainForm
       // 
@@ -335,6 +345,7 @@
     private DevExpress.XtraTab.XtraTabPage xtraTabPage1;
     private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
     private DevExpress.Utils.ImageCollection imageCollection1;
+    private DevExpress.XtraBars.BarButtonItem btnRecurringTransactions;
   }
 }
 
