@@ -34,7 +34,8 @@
       this.bar1 = new DevExpress.XtraBars.Bar();
       this.btnNewGroup = new DevExpress.XtraBars.BarButtonItem();
       this.btnNewAccount = new DevExpress.XtraBars.BarButtonItem();
-      this.bar2 = new DevExpress.XtraBars.Bar();
+      this.btnRecurringTransactions = new DevExpress.XtraBars.BarButtonItem();
+      this.btnNewTransaction = new DevExpress.XtraBars.BarButtonItem();
       this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
       this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
       this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
@@ -51,7 +52,10 @@
       this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
       this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
       this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
-      this.btnRecurringTransactions = new DevExpress.XtraBars.BarButtonItem();
+      this.btnSave = new DevExpress.XtraBars.BarButtonItem();
+      this.btnCloseCurrent = new DevExpress.XtraBars.BarButtonItem();
+      this.btnEditTransaction = new DevExpress.XtraBars.BarButtonItem();
+      this.btnDeleteTransaction = new DevExpress.XtraBars.BarButtonItem();
       ((System.ComponentModel.ISupportInitialize)(this.barManager1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
       this.layoutControl1.SuspendLayout();
@@ -73,8 +77,7 @@
       this.barManager1.AllowQuickCustomization = false;
       this.barManager1.AllowShowToolbarsPopup = false;
       this.barManager1.Bars.AddRange(new DevExpress.XtraBars.Bar[] {
-            this.bar1,
-            this.bar2});
+            this.bar1});
       this.barManager1.DockControls.Add(this.barDockControlTop);
       this.barManager1.DockControls.Add(this.barDockControlBottom);
       this.barManager1.DockControls.Add(this.barDockControlLeft);
@@ -83,9 +86,13 @@
       this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
             this.btnNewAccount,
             this.btnNewGroup,
-            this.btnRecurringTransactions});
-      this.barManager1.MainMenu = this.bar2;
-      this.barManager1.MaxItemId = 3;
+            this.btnRecurringTransactions,
+            this.btnNewTransaction,
+            this.btnSave,
+            this.btnCloseCurrent,
+            this.btnEditTransaction,
+            this.btnDeleteTransaction});
+      this.barManager1.MaxItemId = 8;
       // 
       // bar1
       // 
@@ -94,9 +101,14 @@
       this.bar1.DockRow = 1;
       this.bar1.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
       this.bar1.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnNewGroup, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnNewAccount, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
-            new DevExpress.XtraBars.LinkPersistInfo(this.btnRecurringTransactions)});
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnSave, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnCloseCurrent, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnNewGroup, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.Standard),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnNewAccount, DevExpress.XtraBars.BarItemPaintStyle.Standard),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnRecurringTransactions, "", true, true, true, 0, null, DevExpress.XtraBars.BarItemPaintStyle.Standard),
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnNewTransaction, true),
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnEditTransaction),
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnDeleteTransaction)});
       this.bar1.OptionsBar.AllowQuickCustomization = false;
       this.bar1.OptionsBar.DrawBorder = false;
       this.bar1.OptionsBar.DrawDragBorder = false;
@@ -119,15 +131,20 @@
       this.btnNewAccount.Name = "btnNewAccount";
       this.btnNewAccount.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnNewAccount_ItemClick);
       // 
-      // bar2
+      // btnRecurringTransactions
       // 
-      this.bar2.BarName = "Main menu";
-      this.bar2.DockCol = 0;
-      this.bar2.DockRow = 0;
-      this.bar2.DockStyle = DevExpress.XtraBars.BarDockStyle.Top;
-      this.bar2.OptionsBar.MultiLine = true;
-      this.bar2.OptionsBar.UseWholeRow = true;
-      this.bar2.Text = "Main menu";
+      this.btnRecurringTransactions.Caption = "Recurring Transactions";
+      this.btnRecurringTransactions.Id = 2;
+      this.btnRecurringTransactions.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnRecurringTransactions.ImageOptions.Image")));
+      this.btnRecurringTransactions.Name = "btnRecurringTransactions";
+      this.btnRecurringTransactions.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnRecurringTransactions_ItemClick);
+      // 
+      // btnNewTransaction
+      // 
+      this.btnNewTransaction.Caption = "New Transaction";
+      this.btnNewTransaction.Id = 3;
+      this.btnNewTransaction.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnNewTransaction.ImageOptions.Image")));
+      this.btnNewTransaction.Name = "btnNewTransaction";
       // 
       // barDockControlTop
       // 
@@ -135,7 +152,7 @@
       this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
       this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
       this.barDockControlTop.Manager = this.barManager1;
-      this.barDockControlTop.Size = new System.Drawing.Size(710, 51);
+      this.barDockControlTop.Size = new System.Drawing.Size(710, 31);
       // 
       // barDockControlBottom
       // 
@@ -149,27 +166,27 @@
       // 
       this.barDockControlLeft.CausesValidation = false;
       this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-      this.barDockControlLeft.Location = new System.Drawing.Point(0, 51);
+      this.barDockControlLeft.Location = new System.Drawing.Point(0, 31);
       this.barDockControlLeft.Manager = this.barManager1;
-      this.barDockControlLeft.Size = new System.Drawing.Size(0, 387);
+      this.barDockControlLeft.Size = new System.Drawing.Size(0, 407);
       // 
       // barDockControlRight
       // 
       this.barDockControlRight.CausesValidation = false;
       this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-      this.barDockControlRight.Location = new System.Drawing.Point(710, 51);
+      this.barDockControlRight.Location = new System.Drawing.Point(710, 31);
       this.barDockControlRight.Manager = this.barManager1;
-      this.barDockControlRight.Size = new System.Drawing.Size(0, 387);
+      this.barDockControlRight.Size = new System.Drawing.Size(0, 407);
       // 
       // layoutControl1
       // 
       this.layoutControl1.Controls.Add(this.xtraTabControl1);
       this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.layoutControl1.Location = new System.Drawing.Point(0, 51);
+      this.layoutControl1.Location = new System.Drawing.Point(0, 31);
       this.layoutControl1.Name = "layoutControl1";
       this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(882, 143, 650, 400);
       this.layoutControl1.Root = this.layoutControlGroup1;
-      this.layoutControl1.Size = new System.Drawing.Size(710, 387);
+      this.layoutControl1.Size = new System.Drawing.Size(710, 407);
       this.layoutControl1.TabIndex = 4;
       this.layoutControl1.Text = "layoutControl1";
       // 
@@ -179,7 +196,7 @@
       this.xtraTabControl1.Location = new System.Drawing.Point(12, 12);
       this.xtraTabControl1.Name = "xtraTabControl1";
       this.xtraTabControl1.SelectedTabPage = this.xtraTabPage1;
-      this.xtraTabControl1.Size = new System.Drawing.Size(686, 363);
+      this.xtraTabControl1.Size = new System.Drawing.Size(686, 383);
       this.xtraTabControl1.TabIndex = 9;
       this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.xtraTabPage1});
@@ -190,7 +207,7 @@
       this.xtraTabPage1.Name = "xtraTabPage1";
       this.xtraTabPage1.Padding = new System.Windows.Forms.Padding(3);
       this.xtraTabPage1.ShowCloseButton = DevExpress.Utils.DefaultBoolean.False;
-      this.xtraTabPage1.Size = new System.Drawing.Size(680, 335);
+      this.xtraTabPage1.Size = new System.Drawing.Size(680, 355);
       this.xtraTabPage1.Text = "Accounts";
       // 
       // treeAccounts
@@ -210,7 +227,7 @@
       this.treeAccounts.OptionsSelection.SelectNodesOnRightClick = true;
       this.treeAccounts.OptionsView.ShowIndicator = false;
       this.treeAccounts.ParentFieldName = "ParentId";
-      this.treeAccounts.Size = new System.Drawing.Size(674, 329);
+      this.treeAccounts.Size = new System.Drawing.Size(674, 349);
       this.treeAccounts.StateImageList = this.imageCollection1;
       this.treeAccounts.TabIndex = 4;
       this.treeAccounts.GetStateImage += new DevExpress.XtraTreeList.GetStateImageEventHandler(this.treeAccounts_GetStateImage);
@@ -256,7 +273,7 @@
       this.imageCollection1.Images.SetKeyName(4, "bank.png");
       this.imageCollection1.Images.SetKeyName(5, "currency-dollar-usd.png");
       this.imageCollection1.Images.SetKeyName(6, "receipt-share.png");
-      this.imageCollection1.Images.SetKeyName(7, "cheque-sign.png");
+      this.imageCollection1.Images.SetKeyName(7, "money-coin.png");
       // 
       // layoutControlGroup1
       // 
@@ -265,7 +282,7 @@
       this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem2});
       this.layoutControlGroup1.Name = "Root";
-      this.layoutControlGroup1.Size = new System.Drawing.Size(710, 387);
+      this.layoutControlGroup1.Size = new System.Drawing.Size(710, 407);
       this.layoutControlGroup1.TextVisible = false;
       // 
       // layoutControlItem2
@@ -273,7 +290,7 @@
       this.layoutControlItem2.Control = this.xtraTabControl1;
       this.layoutControlItem2.Location = new System.Drawing.Point(0, 0);
       this.layoutControlItem2.Name = "layoutControlItem2";
-      this.layoutControlItem2.Size = new System.Drawing.Size(690, 367);
+      this.layoutControlItem2.Size = new System.Drawing.Size(690, 387);
       this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
       this.layoutControlItem2.TextVisible = false;
       // 
@@ -285,12 +302,33 @@
       this.popupMenu1.Manager = this.barManager1;
       this.popupMenu1.Name = "popupMenu1";
       // 
-      // btnRecurringTransactions
+      // btnSave
       // 
-      this.btnRecurringTransactions.Caption = "Recurring Transactions";
-      this.btnRecurringTransactions.Id = 2;
-      this.btnRecurringTransactions.Name = "btnRecurringTransactions";
-      this.btnRecurringTransactions.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnRecurringTransactions_ItemClick);
+      this.btnSave.Caption = "Save";
+      this.btnSave.Id = 4;
+      this.btnSave.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem2.ImageOptions.Image")));
+      this.btnSave.Name = "btnSave";
+      // 
+      // btnCloseCurrent
+      // 
+      this.btnCloseCurrent.Caption = "Close";
+      this.btnCloseCurrent.Id = 5;
+      this.btnCloseCurrent.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem3.ImageOptions.Image")));
+      this.btnCloseCurrent.Name = "btnCloseCurrent";
+      // 
+      // btnEditTransaction
+      // 
+      this.btnEditTransaction.Caption = "Edit Transaction";
+      this.btnEditTransaction.Id = 6;
+      this.btnEditTransaction.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnEditTransaction.ImageOptions.Image")));
+      this.btnEditTransaction.Name = "btnEditTransaction";
+      // 
+      // btnDeleteTransaction
+      // 
+      this.btnDeleteTransaction.Caption = "Delete Transaction";
+      this.btnDeleteTransaction.Id = 7;
+      this.btnDeleteTransaction.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnDeleteTransaction.ImageOptions.Image")));
+      this.btnDeleteTransaction.Name = "btnDeleteTransaction";
       // 
       // MainForm
       // 
@@ -326,7 +364,6 @@
 
     private DevExpress.XtraBars.BarManager barManager1;
     private DevExpress.XtraBars.Bar bar1;
-    private DevExpress.XtraBars.Bar bar2;
     private DevExpress.XtraBars.BarDockControl barDockControlTop;
     private DevExpress.XtraBars.BarDockControl barDockControlBottom;
     private DevExpress.XtraBars.BarDockControl barDockControlLeft;
@@ -346,6 +383,11 @@
     private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
     private DevExpress.Utils.ImageCollection imageCollection1;
     private DevExpress.XtraBars.BarButtonItem btnRecurringTransactions;
+    private DevExpress.XtraBars.BarButtonItem btnNewTransaction;
+    private DevExpress.XtraBars.BarButtonItem btnSave;
+    private DevExpress.XtraBars.BarButtonItem btnCloseCurrent;
+    private DevExpress.XtraBars.BarButtonItem btnEditTransaction;
+    private DevExpress.XtraBars.BarButtonItem btnDeleteTransaction;
   }
 }
 

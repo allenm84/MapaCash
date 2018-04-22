@@ -9,19 +9,31 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraLayout;
 using DevExpress.XtraScheduler;
+using DevExpress.XtraScheduler.Drawing;
 
 namespace Finances
 {
   public partial class EditRecurrencePatternDialog : BaseForm
   {
-    const string AppointmentBackColor = "BackColor";
-    const string AppointmentForeColor = "ForeColor";
+    static readonly Color BackgroundColor = ColorTranslator.FromHtml("#4A90D9");
+
+    private RecurringTransaction _model = new RecurringTransaction();
+    private HashSet<DateTime> _visibleDates = new HashSet<DateTime>();
+    private bool _modelInitialized = false;
 
     public EditRecurrencePatternDialog()
     {
       InitializeComponent();
-      schedulerStorage1.Appointments.CustomFieldMappings.Add(new AppointmentCustomFieldMapping(AppointmentBackColor, AppointmentBackColor, FieldValueType.Integer));
-      schedulerStorage1.Appointments.CustomFieldMappings.Add(new AppointmentCustomFieldMapping(AppointmentForeColor, AppointmentForeColor, FieldValueType.Integer));
+      _model.Type = RecurringType.Once;
+    }
+
+    public RecurringTransaction Model => _model;
+
+    public void InitFrom(RecurringTransaction data)
+    {
+      _model.OverwriteWith(data);
+      _modelInitialized = true;
+      UpdateSchedulerControl();
     }
 
     private void SetLayoutVisible(BaseLayoutItem item, bool visible, int rowHeight)
@@ -35,76 +47,51 @@ namespace Finances
       row.Height = visible ? rowHeight : 1;
     }
 
+    private void PushToModel()
+    {
+      // set the variable for initialization
+      _modelInitialized = true;
+
+      // update the model underneath
+      var day1 = (int)recurringDayOfMonthControl1.DayOfMonth1;
+      var day2 = (int)recurringDayOfMonthControl1.DayOfMonth2;
+      if (day1 > day2)
+      {
+        var temp = day1;
+        day1 = day2;
+        day2 = temp;
+      }
+
+      _model.DayOfMonth = (RecurringDayOfMonth)day1;
+      _model.DayOfMonth2 = (RecurringDayOfMonth)day2;
+      _model.Days = recurringWeekDaysControl1.Days;
+      _model.EndDate = recurringEndTypeControl1.UntilDate;
+      _model.EndType = recurringEndTypeControl1.EndType;
+      _model.MaxOccurrences = recurringEndTypeControl1.MaxOccurrences;
+      _model.Period = recurringPeriodControl1.Period;
+      _model.StartDate = ctrlFrequency.StartDate.Date;
+
+      var type = ctrlFrequency.Frequency;
+      if (type == RecurringType.SemiMonthly && (day1 == day2))
+      {
+        type = RecurringType.Monthly;
+      }
+      _model.Type = type;
+      UpdateSchedulerControl();
+    }
+
     private void UpdateSchedulerControl()
     {
-      schedulerControl1.Start = ctrlFrequency.StartDate;
-
-      schedulerStorage1.BeginUpdate();
-      schedulerStorage1.Appointments.Clear();
-
-      var apt = schedulerStorage1.CreateAppointment(AppointmentType.Pattern);
-      apt.AllDay = true;
-      apt.Description = "";
-      apt.Start = ctrlFrequency.StartDate;
-      apt.Subject = "";
-      apt.CustomFields[AppointmentBackColor] = Color.SlateBlue.ToArgb();
-      apt.CustomFields[AppointmentForeColor] = Color.White.ToArgb();
-      apt.RecurrenceInfo.Start = apt.Start;
-      apt.RecurrenceInfo.WeekOfMonth = WeekOfMonth.None;
-
-      switch (recurringEndTypeControl1.EndType)
-      {
-        case RecurringEndType.ByCount:
-          apt.RecurrenceInfo.Range = RecurrenceRange.OccurrenceCount;
-          apt.RecurrenceInfo.OccurrenceCount = recurringEndTypeControl1.MaxOccurrences;
-          break;
-        case RecurringEndType.ByDate:
-          apt.RecurrenceInfo.Range = RecurrenceRange.EndByDate;
-          apt.RecurrenceInfo.End = recurringEndTypeControl1.UntilDate;
-          break;
-        case RecurringEndType.Never:
-          apt.RecurrenceInfo.Range = RecurrenceRange.NoEndDate;
-          break;
-      }
-      
-      switch (ctrlFrequency.Frequency)
-      {
-        case RecurringType.Daily:
-          apt.RecurrenceInfo.Periodicity = recurringPeriodControl1.Period;
-          apt.RecurrenceInfo.Type = RecurrenceType.Daily;
-          break;
-        case RecurringType.Monthly:
-          apt.RecurrenceInfo.Periodicity = recurringPeriodControl1.Period;
-          apt.RecurrenceInfo.Type = RecurrenceType.Monthly;
-          apt.RecurrenceInfo.DayNumber = (int)recurringDayOfMonthControl1.DayOfMonth1;
-          break;
-        case RecurringType.Once:
-          apt.RecurrenceInfo.Periodicity = 1;
-          apt.RecurrenceInfo.Type = RecurrenceType.Daily;
-          apt.RecurrenceInfo.Range = RecurrenceRange.OccurrenceCount;
-          apt.RecurrenceInfo.OccurrenceCount = 1;
-          break;
-        case RecurringType.SemiMonthly:
-          break;
-        case RecurringType.Weekly:
-          var days = recurringWeekDaysControl1.Days;
-          if (days == RecurringDayOfWeek.None)
-            days = RecurringDayOfWeek.All;
-
-          apt.RecurrenceInfo.Periodicity = recurringPeriodControl1.Period;
-          apt.RecurrenceInfo.Type = RecurrenceType.Weekly;
-          apt.RecurrenceInfo.WeekDays = days.ToWeekDays();
-          break;
-      }
-
-      schedulerStorage1.Appointments.Add(apt);
-      schedulerStorage1.EndUpdate();
+      // set the schedule date
+      schedulerControl1.Start = _model.StartDate;
+      schedulerControl1.LimitInterval.Start = _model.StartDate;
+      schedulerControl1.LimitInterval.End = _model.StartDate.AddYears(100);
     }
 
     protected override void OnLoad(EventArgs e)
     {
       base.OnLoad(e);
-      ctrlFrequency.Frequency = RecurringType.Once;
+      ctrlFrequency.Frequency = _model.Type;
     }
 
     private void ctrlFrequency_FrequencyChanged(object sender, EventArgs e)
@@ -137,12 +124,12 @@ namespace Finances
       }
 
       layoutControlGroup3.Update();
-      UpdateSchedulerControl();
+      PushToModel();
     }
 
     private void recurrencePattern_Changed(object sender, EventArgs e)
     {
-      UpdateSchedulerControl();
+      PushToModel();
     }
 
     private void ctrlSchedule_PopupMenuShowing(object sender, DevExpress.XtraScheduler.PopupMenuShowingEventArgs e)
@@ -150,18 +137,53 @@ namespace Finances
       e.Menu.Items.Clear();
     }
 
-    private void ctrlSchedule_AppointmentViewInfoCustomizing(object sender, AppointmentViewInfoCustomizingEventArgs e)
+    private void schedulerControl1_VisibleIntervalChanged(object sender, EventArgs e)
     {
-      var fields = e.ViewInfo.Appointment.CustomFields;
+      if (!_modelInitialized)
+        return;
 
-      if (fields[AppointmentBackColor] is int backColor)
+      _visibleDates.Clear();
+
+      var date = _model.GetNextDate(out bool isValid);
+      if (_model.Type == RecurringType.Once)
       {
-        e.ViewInfo.Appearance.BackColor = Color.FromArgb(backColor);
+        _visibleDates.Add(date.Date);
+      }
+      else if (isValid)
+      {
+        foreach (var d in _model.GenerateDates(date, schedulerControl1.LimitInterval.End))
+        {
+          _visibleDates.Add(d);
+        }
       }
 
-      if (fields[AppointmentForeColor] is int foreColor)
+      schedulerControl1.MonthView.Invalidate();
+    }
+
+    private void schedulerControl1_CustomDrawDayHeader(object sender, CustomDrawObjectEventArgs e)
+    {
+      if (e.ObjectInfo is MonthViewTimeCellHeader header)
       {
-        e.ViewInfo.Appearance.ForeColor = Color.FromArgb(foreColor);
+        header.Selected = false;
+        if (_visibleDates.Contains(header.Interval.Start.Date))
+        {
+          var backBrush = e.Cache.GetSolidBrush(BackgroundColor);
+          e.Graphics.FillRectangle(backBrush, e.Bounds);
+
+          var appearance = header.CaptionAppearance;
+          var bounds = header.ContentBounds;
+          var textBrush = appearance.GetForeBrush(e.Cache);
+          e.Graphics.DrawString(header.Caption, appearance.Font, textBrush, bounds, appearance.GetStringFormat());
+          e.Handled = true;
+        }
+      }
+    }
+
+    private void schedulerControl1_CustomDrawTimeCell(object sender, CustomDrawObjectEventArgs e)
+    {
+      if (e.ObjectInfo is TimeCell cell)
+      {
+        cell.Selected = false;
       }
     }
   }

@@ -10,7 +10,7 @@ using DevExpress.XtraTreeList.Nodes;
 
 namespace Finances
 {
-  public partial class MainForm : BaseForm
+  public partial class MainForm : BaseForm, IAccountProvider
   {
     private Dictionary<AccountType, int> _accountImageIndex = new Dictionary<AccountType, int>
     {
@@ -28,6 +28,10 @@ namespace Finances
     {
       InitializeComponent();
     }
+
+    IEnumerable<AccountNode> IAccountProvider.Accounts => nodeBindingSource
+      .OfType<AccountNode>()
+      .Where(n => !(n is GroupNode));
 
     private bool TryGetTarget(out AccountNode target)
     {
@@ -89,6 +93,7 @@ namespace Finances
 
     private void btnRecurringTransactions_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
     {
+      
     }
 
     private void treeAccounts_FocusedNodeChanged(object sender, DevExpress.XtraTreeList.FocusedNodeChangedEventArgs e)

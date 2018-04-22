@@ -88,6 +88,12 @@
     <Compile Include="Dialogs\EditRecurrencePatternDialog.Designer.cs">
       <DependentUpon>EditRecurrencePatternDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\EditRecurringTransactionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\EditRecurringTransactionDialog.Designer.cs">
+      <DependentUpon>EditRecurringTransactionDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Nodes\AccountNode.cs" />
     <Compile Include="Core\BaseNotifyPropertyChanged.cs" />
     <Compile Include="Core\BaseTreeListNode.cs" />
@@ -121,7 +127,16 @@
     <Compile Include="Controls\RecurringEndTypeControl.Designer.cs">
       <DependentUpon>RecurringEndTypeControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RecurringTransactionsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\RecurringTransactionsControl.Designer.cs">
+      <DependentUpon>RecurringTransactionsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\IAccountProvider.cs" />
+    <Compile Include="Tools\DateMath.cs" />
     <Compile Include="Tools\Extensions.cs" />
+    <Compile Include="Tools\Recurrence.cs" />
     <Compile Include="View\AccountTypeItem.cs" />
     <Compile Include="Tools\BaseTreeListNodeEqualityComparer.cs" />
     <Compile Include="MainForm.cs">
@@ -135,6 +150,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\RecurringDayOfMonthItem.cs" />
+    <Compile Include="View\RecurringTransactionView.cs" />
     <Compile Include="View\RecurringTypeItem.cs" />
     <EmbeddedResource Include="Dialogs\BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
@@ -144,6 +160,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\EditRecurrencePatternDialog.resx">
       <DependentUpon>EditRecurrencePatternDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\EditRecurringTransactionDialog.resx">
+      <DependentUpon>EditRecurringTransactionDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -173,6 +192,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\RecurringEndTypeControl.resx">
       <DependentUpon>RecurringEndTypeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\RecurringTransactionsControl.resx">
+      <DependentUpon>RecurringTransactionsControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

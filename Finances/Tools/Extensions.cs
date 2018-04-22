@@ -9,6 +9,24 @@ namespace Finances
 {
   public static class Extensions
   {
+    public static bool Contains(this RecurringDayOfWeek days, DayOfWeek day)
+    {
+      var shifts = (int)day;
+      var value = (RecurringDayOfWeek)(1 << shifts);
+      return days.HasFlag(value);
+    }
+
+    public static DateTime FirstOfMonth(this DateTime date)
+    {
+      return new DateTime(date.Year, date.Month, 1);
+    }
+
+    public static DateTime EndOfMonth(this DateTime date)
+    {
+      var days = DateTime.DaysInMonth(date.Year, date.Month);
+      return new DateTime(date.Year, date.Month, days);
+    }
+
     public static WeekDays ToWeekDays(this RecurringDayOfWeek days)
     {
       var list = new List<WeekDays>();

@@ -51,8 +51,8 @@
       this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
       this.schedulerControl1 = new DevExpress.XtraScheduler.SchedulerControl();
       this.schedulerStorage1 = new DevExpress.XtraScheduler.SchedulerStorage(this.components);
-      this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
-      this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
+      this.btnCancel = new DevExpress.XtraEditors.SimpleButton();
+      this.btnOK = new DevExpress.XtraEditors.SimpleButton();
       this.recurringDayOfMonthControl1 = new Finances.RecurringDayOfMonthControl();
       this.recurringWeekDaysControl1 = new Finances.RecurringWeekDaysControl();
       this.recurringPeriodControl1 = new Finances.RecurringPeriodControl();
@@ -92,8 +92,8 @@
       // layoutControl1
       // 
       this.layoutControl1.Controls.Add(this.schedulerControl1);
-      this.layoutControl1.Controls.Add(this.simpleButton2);
-      this.layoutControl1.Controls.Add(this.simpleButton1);
+      this.layoutControl1.Controls.Add(this.btnCancel);
+      this.layoutControl1.Controls.Add(this.btnOK);
       this.layoutControl1.Controls.Add(this.recurringDayOfMonthControl1);
       this.layoutControl1.Controls.Add(this.recurringWeekDaysControl1);
       this.layoutControl1.Controls.Add(this.recurringPeriodControl1);
@@ -140,31 +140,35 @@
       this.schedulerControl1.Views.MonthView.AppointmentDisplayOptions.StatusDisplayType = DevExpress.XtraScheduler.AppointmentStatusDisplayType.Never;
       this.schedulerControl1.Views.MonthView.NavigationButtonVisibility = DevExpress.XtraScheduler.NavigationButtonVisibility.Never;
       this.schedulerControl1.Views.MonthView.ShowMoreButtons = false;
-      this.schedulerControl1.Views.MonthView.WeekCount = 8;
+      this.schedulerControl1.Views.MonthView.WeekCount = 12;
       this.schedulerControl1.Views.TimelineView.Enabled = false;
       this.schedulerControl1.Views.WeekView.Enabled = false;
       this.schedulerControl1.Views.WorkWeekView.Enabled = false;
       this.schedulerControl1.Views.WorkWeekView.TimeRulers.Add(timeRuler3);
-      this.schedulerControl1.AppointmentViewInfoCustomizing += new DevExpress.XtraScheduler.AppointmentViewInfoCustomizingEventHandler(this.ctrlSchedule_AppointmentViewInfoCustomizing);
+      this.schedulerControl1.VisibleIntervalChanged += new System.EventHandler(this.schedulerControl1_VisibleIntervalChanged);
       this.schedulerControl1.PopupMenuShowing += new DevExpress.XtraScheduler.PopupMenuShowingEventHandler(this.ctrlSchedule_PopupMenuShowing);
+      this.schedulerControl1.CustomDrawTimeCell += new DevExpress.XtraScheduler.CustomDrawObjectEventHandler(this.schedulerControl1_CustomDrawTimeCell);
+      this.schedulerControl1.CustomDrawDayHeader += new DevExpress.XtraScheduler.CustomDrawObjectEventHandler(this.schedulerControl1_CustomDrawDayHeader);
       // 
-      // simpleButton2
+      // btnCancel
       // 
-      this.simpleButton2.Location = new System.Drawing.Point(503, 507);
-      this.simpleButton2.Name = "simpleButton2";
-      this.simpleButton2.Size = new System.Drawing.Size(72, 22);
-      this.simpleButton2.StyleController = this.layoutControl1;
-      this.simpleButton2.TabIndex = 12;
-      this.simpleButton2.Text = "Cancel";
+      this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+      this.btnCancel.Location = new System.Drawing.Point(503, 507);
+      this.btnCancel.Name = "btnCancel";
+      this.btnCancel.Size = new System.Drawing.Size(72, 22);
+      this.btnCancel.StyleController = this.layoutControl1;
+      this.btnCancel.TabIndex = 12;
+      this.btnCancel.Text = "Cancel";
       // 
-      // simpleButton1
+      // btnOK
       // 
-      this.simpleButton1.Location = new System.Drawing.Point(427, 507);
-      this.simpleButton1.Name = "simpleButton1";
-      this.simpleButton1.Size = new System.Drawing.Size(72, 22);
-      this.simpleButton1.StyleController = this.layoutControl1;
-      this.simpleButton1.TabIndex = 11;
-      this.simpleButton1.Text = "OK";
+      this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+      this.btnOK.Location = new System.Drawing.Point(427, 507);
+      this.btnOK.Name = "btnOK";
+      this.btnOK.Size = new System.Drawing.Size(72, 22);
+      this.btnOK.StyleController = this.layoutControl1;
+      this.btnOK.TabIndex = 11;
+      this.btnOK.Text = "OK";
       // 
       // recurringDayOfMonthControl1
       // 
@@ -213,7 +217,8 @@
       this.groupControl1.Controls.Add(this.recurringEndTypeControl1);
       this.groupControl1.Location = new System.Drawing.Point(12, 12);
       this.groupControl1.Name = "groupControl1";
-      this.groupControl1.Size = new System.Drawing.Size(196, 110);
+      this.groupControl1.Padding = new System.Windows.Forms.Padding(9);
+      this.groupControl1.Size = new System.Drawing.Size(196, 130);
       this.groupControl1.TabIndex = 5;
       this.groupControl1.Text = "Occurrences";
       // 
@@ -221,10 +226,10 @@
       // 
       this.recurringEndTypeControl1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.recurringEndTypeControl1.EndType = Finances.RecurringEndType.Never;
-      this.recurringEndTypeControl1.Location = new System.Drawing.Point(2, 20);
+      this.recurringEndTypeControl1.Location = new System.Drawing.Point(11, 29);
       this.recurringEndTypeControl1.MaxOccurrences = 1;
       this.recurringEndTypeControl1.Name = "recurringEndTypeControl1";
-      this.recurringEndTypeControl1.Size = new System.Drawing.Size(192, 88);
+      this.recurringEndTypeControl1.Size = new System.Drawing.Size(174, 90);
       this.recurringEndTypeControl1.TabIndex = 0;
       this.recurringEndTypeControl1.UntilDate = new System.DateTime(2018, 4, 21, 0, 0, 0, 0);
       this.recurringEndTypeControl1.EndTypeChanged += new System.EventHandler(this.recurrencePattern_Changed);
@@ -281,7 +286,7 @@
       columnDefinition1.Width = 100D;
       this.layoutControlGroup2.OptionsTableLayoutGroup.ColumnDefinitions.AddRange(new DevExpress.XtraLayout.ColumnDefinition[] {
             columnDefinition1});
-      rowDefinition1.Height = 114D;
+      rowDefinition1.Height = 134D;
       rowDefinition1.SizeType = System.Windows.Forms.SizeType.AutoSize;
       rowDefinition2.Height = 100D;
       rowDefinition2.SizeType = System.Windows.Forms.SizeType.Percent;
@@ -296,10 +301,10 @@
       // 
       this.layoutControlItem2.Control = this.groupControl1;
       this.layoutControlItem2.Location = new System.Drawing.Point(0, 0);
-      this.layoutControlItem2.MaxSize = new System.Drawing.Size(200, 114);
-      this.layoutControlItem2.MinSize = new System.Drawing.Size(200, 114);
+      this.layoutControlItem2.MaxSize = new System.Drawing.Size(200, 134);
+      this.layoutControlItem2.MinSize = new System.Drawing.Size(200, 134);
       this.layoutControlItem2.Name = "layoutControlItem2";
-      this.layoutControlItem2.Size = new System.Drawing.Size(200, 114);
+      this.layoutControlItem2.Size = new System.Drawing.Size(200, 134);
       this.layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
       this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
       this.layoutControlItem2.TextVisible = false;
@@ -383,7 +388,7 @@
       // 
       // layoutControlItem8
       // 
-      this.layoutControlItem8.Control = this.simpleButton1;
+      this.layoutControlItem8.Control = this.btnOK;
       this.layoutControlItem8.Location = new System.Drawing.Point(415, 495);
       this.layoutControlItem8.Name = "layoutControlItem8";
       this.layoutControlItem8.OptionsTableLayoutItem.ColumnIndex = 2;
@@ -394,7 +399,7 @@
       // 
       // layoutControlItem9
       // 
-      this.layoutControlItem9.Control = this.simpleButton2;
+      this.layoutControlItem9.Control = this.btnCancel;
       this.layoutControlItem9.Location = new System.Drawing.Point(491, 495);
       this.layoutControlItem9.Name = "layoutControlItem9";
       this.layoutControlItem9.OptionsTableLayoutItem.ColumnIndex = 3;
@@ -416,8 +421,10 @@
       // 
       // EditRecurrencePatternDialog
       // 
+      this.AcceptButton = this.btnOK;
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.CancelButton = this.btnCancel;
       this.ClientSize = new System.Drawing.Size(587, 541);
       this.Controls.Add(this.layoutControl1);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -462,8 +469,8 @@
     private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
     private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
     private DevExpress.XtraLayout.LayoutControlItem layoutControlItem7;
-    private DevExpress.XtraEditors.SimpleButton simpleButton2;
-    private DevExpress.XtraEditors.SimpleButton simpleButton1;
+    private DevExpress.XtraEditors.SimpleButton btnCancel;
+    private DevExpress.XtraEditors.SimpleButton btnOK;
     private DevExpress.XtraLayout.LayoutControlItem layoutControlItem8;
     private DevExpress.XtraLayout.LayoutControlItem layoutControlItem9;
     private DevExpress.XtraScheduler.SchedulerControl schedulerControl1;
