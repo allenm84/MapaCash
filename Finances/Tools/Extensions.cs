@@ -3,17 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using DevExpress.XtraEditors;
 using DevExpress.XtraScheduler;
 
 namespace Finances
 {
   public static class Extensions
   {
-    public static bool Contains(this RecurringDayOfWeek days, DayOfWeek day)
+    public static void AddRange<T>(this IList<T> list, IEnumerable<T> items)
     {
-      var shifts = (int)day;
-      var value = (RecurringDayOfWeek)(1 << shifts);
-      return days.HasFlag(value);
+      foreach (var item in items)
+      {
+        list.Add(item);
+      }
+    }
+
+    public static bool Confirm(this IWin32Window window, string message, string caption = "Confirm")
+    {
+      var result = XtraMessageBox.Show(window, message, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+      return (result == DialogResult.Yes);
     }
 
     public static DateTime FirstOfMonth(this DateTime date)
@@ -25,40 +34,6 @@ namespace Finances
     {
       var days = DateTime.DaysInMonth(date.Year, date.Month);
       return new DateTime(date.Year, date.Month, days);
-    }
-
-    public static WeekDays ToWeekDays(this RecurringDayOfWeek days)
-    {
-      var list = new List<WeekDays>();
-      if ((days & RecurringDayOfWeek.Sunday) != 0)
-      {
-        list.Add(WeekDays.Sunday);
-      }
-      if ((days & RecurringDayOfWeek.Monday) != 0)
-      {
-        list.Add(WeekDays.Monday);
-      }
-      if ((days & RecurringDayOfWeek.Tuesday) != 0)
-      {
-        list.Add(WeekDays.Tuesday);
-      }
-      if ((days & RecurringDayOfWeek.Wednesday) != 0)
-      {
-        list.Add(WeekDays.Wednesday);
-      }
-      if ((days & RecurringDayOfWeek.Thursday) != 0)
-      {
-        list.Add(WeekDays.Thursday);
-      }
-      if ((days & RecurringDayOfWeek.Friday) != 0)
-      {
-        list.Add(WeekDays.Friday);
-      }
-      if ((days & RecurringDayOfWeek.Saturday) != 0)
-      {
-        list.Add(WeekDays.Saturday);
-      }
-      return list.Aggregate((a, b) => a | b);
     }
 
     public static object[] AsArray<T>(this IEnumerable<T> items)

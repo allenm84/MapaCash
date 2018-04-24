@@ -39,9 +39,11 @@
   <ItemGroup>
     <Reference Include="DevExpress.BonusSkins.v17.2" />
     <Reference Include="DevExpress.Data.v17.2" />
+    <Reference Include="DevExpress.Dialogs.v17.2.Core, Version=17.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Utils.v17.2" />
     <Reference Include="DevExpress.XtraBars.v17.2" />
     <Reference Include="DevExpress.Sparkline.v17.2.Core" />
+    <Reference Include="DevExpress.XtraDialogs.v17.2, Version=17.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraEditors.v17.2" />
     <Reference Include="DevExpress.Printing.v17.2.Core" />
     <Reference Include="DevExpress.XtraGrid.v17.2, Version=17.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -50,6 +52,9 @@
     <Reference Include="DevExpress.XtraScheduler.v17.2, Version=17.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraScheduler.v17.2.Core, Version=17.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraTreeList.v17.2, Version=17.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -63,13 +68,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\BaseViewModel.cs" />
-    <Compile Include="Data\AccountData.cs" />
     <Compile Include="Data\AccountType.cs" />
     <Compile Include="Data\RecurringDayOfMonth.cs" />
     <Compile Include="Data\RecurringDayOfWeek.cs" />
     <Compile Include="Data\RecurringEndType.cs" />
     <Compile Include="Data\RecurringTransaction.cs" />
     <Compile Include="Data\RecurringType.cs" />
+    <Compile Include="Data\RecurringValueType.cs" />
+    <Compile Include="Data\SaveData.cs" />
     <Compile Include="Dialogs\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,24 +140,42 @@
       <DependentUpon>RecurringTransactionsControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Providers\IAccountProvider.cs" />
+    <Compile Include="Dialogs\SetupSimulationDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\SetupSimulationDialog.Designer.cs">
+      <DependentUpon>SetupSimulationDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SimulationResultsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\SimulationResultsDialog.Designer.cs">
+      <DependentUpon>SimulationResultsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SimulationAccountTransactionsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SimulationAccountTransactionsControl.Designer.cs">
+      <DependentUpon>SimulationAccountTransactionsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Simulation\SimEngine.cs" />
+    <Compile Include="Simulation\SimulationAccount.cs" />
+    <Compile Include="Simulation\SimulationAccountTransaction.cs" />
     <Compile Include="Tools\DateMath.cs" />
     <Compile Include="Tools\Extensions.cs" />
     <Compile Include="Tools\Recurrence.cs" />
-    <Compile Include="View\AccountTypeItem.cs" />
-    <Compile Include="Tools\BaseTreeListNodeEqualityComparer.cs" />
+    <Compile Include="Items\AccountTypeItem.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Nodes\GroupNode.cs" />
-    <Compile Include="Tools\IdGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="View\RecurringDayOfMonthItem.cs" />
-    <Compile Include="View\RecurringTransactionView.cs" />
-    <Compile Include="View\RecurringTypeItem.cs" />
+    <Compile Include="Items\RecurringDayOfMonthItem.cs" />
+    <Compile Include="Items\RecurringTypeItem.cs" />
+    <Compile Include="Types\DecimalValue.cs" />
     <EmbeddedResource Include="Dialogs\BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -196,6 +220,16 @@
     <EmbeddedResource Include="Controls\RecurringTransactionsControl.resx">
       <DependentUpon>RecurringTransactionsControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\SetupSimulationDialog.resx">
+      <DependentUpon>SetupSimulationDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\SimulationResultsDialog.resx">
+      <DependentUpon>SimulationResultsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SimulationAccountTransactionsControl.resx">
+      <DependentUpon>SimulationAccountTransactionsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Finances
 {
-  public class AccountData
+  public enum RecurringValueType
   {
+    Amount,
+    Interest,
   }
 }

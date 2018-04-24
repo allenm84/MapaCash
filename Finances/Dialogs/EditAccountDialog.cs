@@ -13,11 +13,16 @@ namespace Finances
 {
   public partial class EditAccountDialog : BaseForm
   {
-    public EditAccountDialog()
+    private readonly IAccountProvider _provider;
+
+    public EditAccountDialog(IAccountProvider provider)
     {
+      _provider = provider;
       InitializeComponent();
       cboType.Properties.Items.AddRange(AccountTypeItem.Items.AsArray());
       cboType.SelectedIndex = 0;
+      cboType.SelectedIndexChanged += cboType_SelectedIndexChanged;
+      accountNodeBindingSource.DataSource = provider.Accounts;
     }
 
     public string AccountName
@@ -54,6 +59,28 @@ namespace Finances
     {
       get => numBalance.Value;
       set => numBalance.Value = value;
+    }
+
+    public string ParentId
+    {
+      get => cboParentAccount.EditValue as string;
+      set => cboParentAccount.EditValue = value;
+    }
+
+    private void cboType_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      numBalance.Enabled = (Type != AccountType.Group);
+    }
+
+    private void gridViewParentAccount_CustomRowFilter(object sender, DevExpress.XtraGrid.Views.Base.RowFilterEventArgs e)
+    {
+      var index = e.ListSourceRow;
+      var row = gridViewParentAccount.GetRowHandle(index);
+      if (gridViewParentAccount.GetRow(row) is AccountNode node && node.Type != AccountType.Group)
+      {
+        e.Visible = false;
+        e.Handled = true;
+      }
     }
   }
 }

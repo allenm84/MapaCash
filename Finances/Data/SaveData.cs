@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Finances
 {
-  public interface IAccountProvider
+  public class SaveData
   {
-    IList<AccountNode> Accounts { get; }
-    AccountNode AddNewAccount();
+    public AccountNode[] Accounts { get; set; }
+    public RecurringTransaction[] Transactions { get; set; }
   }
 }

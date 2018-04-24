@@ -145,7 +145,6 @@
       this.schedulerControl1.Views.WeekView.Enabled = false;
       this.schedulerControl1.Views.WorkWeekView.Enabled = false;
       this.schedulerControl1.Views.WorkWeekView.TimeRulers.Add(timeRuler3);
-      this.schedulerControl1.VisibleIntervalChanged += new System.EventHandler(this.schedulerControl1_VisibleIntervalChanged);
       this.schedulerControl1.PopupMenuShowing += new DevExpress.XtraScheduler.PopupMenuShowingEventHandler(this.ctrlSchedule_PopupMenuShowing);
       this.schedulerControl1.CustomDrawTimeCell += new DevExpress.XtraScheduler.CustomDrawObjectEventHandler(this.schedulerControl1_CustomDrawTimeCell);
       this.schedulerControl1.CustomDrawDayHeader += new DevExpress.XtraScheduler.CustomDrawObjectEventHandler(this.schedulerControl1_CustomDrawDayHeader);

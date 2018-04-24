@@ -8,9 +8,75 @@ namespace Finances
 {
   public static class Recurrence
   {
+    public static object GetValue(this RecurringTransaction transaction)
+    {
+      if (transaction.ValueType == RecurringValueType.Interest)
+      {
+        return transaction.Interest;
+      }
+      else
+      {
+        return transaction.Amount;
+      }
+    }
+
+    public static string GetFrequency(this RecurringTransaction transaction)
+    {
+      string frequency = string.Empty;
+      switch (transaction.Type)
+      {
+        case RecurringType.Daily:
+          frequency = $"Daily{GetPeriod()}";
+          break;
+        case RecurringType.Monthly:
+          frequency = $"Monthly{GetPeriod()}: {(int)transaction.DayOfMonth}";
+          break;
+        case RecurringType.Once:
+          frequency = "Once";
+          break;
+        case RecurringType.SemiMonthly:
+          frequency = $"Semi-monthly{GetPeriod()}: {string.Join(", ", GetDays())}";
+          break;
+        case RecurringType.Weekly:
+          frequency = $"Weekly{GetPeriod()}: {GetDaysOfWeek()}";
+          break;
+      }
+      return frequency;
+
+      string GetPeriod()
+      {
+        if (transaction.Period > 1)
+          return $" (x{transaction.Period})";
+        return string.Empty;
+      }
+
+      IEnumerable<int> GetDays()
+      {
+        yield return (int)transaction.DayOfMonth;
+        yield return (int)transaction.DayOfMonth2;
+      }
+
+      string GetDaysOfWeek()
+      {
+        var days = new char[7];
+        for (int i = 0; i < days.Length; ++i)
+        {
+          var day = (RecurringDayOfWeek)(1 << i);
+          days[i] = transaction.Days.HasFlag(day)
+            ? $"{day}"[0]
+            : '-';
+        }
+        return new string(days);
+      }
+    }
+
     public static void OverwriteWith(this RecurringTransaction target, RecurringTransaction data)
     {
+      target.Name = data.Name;
       target.Amount = data.Amount;
+      target.Interest = data.Interest;
+      target.ValueType = data.ValueType;
+
       target.FromAccountId = data.FromAccountId;
       target.ToAccountId = data.ToAccountId;
       
@@ -23,6 +89,13 @@ namespace Finances
       target.Period = data.Period;
       target.StartDate = data.StartDate;
       target.Type = data.Type;
+    }
+
+    public static bool Contains(this RecurringDayOfWeek days, DayOfWeek day)
+    {
+      var shifts = (int)day;
+      var value = (RecurringDayOfWeek)(1 << shifts);
+      return days.HasFlag(value);
     }
 
     public static DateTime GetNextDate(this RecurringTransaction model, out bool isValid)
@@ -91,6 +164,12 @@ namespace Finances
 
         yield return date.Date;
         ++dateCount;
+
+        if (model.Type == RecurringType.Once)
+        {
+          // that's it
+          break;
+        }
 
         if (model.EndType == RecurringEndType.ByCount && dateCount >= model.MaxOccurrences)
         {

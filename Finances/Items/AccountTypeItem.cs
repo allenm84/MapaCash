@@ -16,6 +16,7 @@ namespace Finances
       { AccountType.Income, "Income" },
       { AccountType.Liability, "Liability" },
       { AccountType.Savings, "Savings" },
+      { AccountType.Group, "Group" },
     };
 
     static readonly Dictionary<AccountType, AccountTypeItem> AccountTypeItems;

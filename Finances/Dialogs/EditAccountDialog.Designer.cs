@@ -28,6 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
+      this.components = new System.ComponentModel.Container();
       this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
       this.btnOK = new DevExpress.XtraEditors.SimpleButton();
       this.btnCancel = new DevExpress.XtraEditors.SimpleButton();
@@ -35,6 +36,11 @@
       this.numBalance = new DevExpress.XtraEditors.SpinEdit();
       this.txtName = new DevExpress.XtraEditors.TextEdit();
       this.txtDescription = new DevExpress.XtraEditors.TextEdit();
+      this.cboParentAccount = new DevExpress.XtraEditors.GridLookUpEdit();
+      this.accountNodeBindingSource = new System.Windows.Forms.BindingSource(this.components);
+      this.gridViewParentAccount = new DevExpress.XtraGrid.Views.Grid.GridView();
+      this.colName = new DevExpress.XtraGrid.Columns.GridColumn();
+      this.colType = new DevExpress.XtraGrid.Columns.GridColumn();
       this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
       this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
       this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -43,12 +49,16 @@
       this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
       this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
       this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
+      this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
       this.layoutControl1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.cboType.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numBalance.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.txtName.Properties)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.txtDescription.Properties)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.cboParentAccount.Properties)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.accountNodeBindingSource)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.gridViewParentAccount)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
@@ -57,6 +67,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
       this.SuspendLayout();
       // 
       // layoutControl1
@@ -67,19 +78,20 @@
       this.layoutControl1.Controls.Add(this.numBalance);
       this.layoutControl1.Controls.Add(this.txtName);
       this.layoutControl1.Controls.Add(this.txtDescription);
+      this.layoutControl1.Controls.Add(this.cboParentAccount);
       this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.layoutControl1.Location = new System.Drawing.Point(0, 0);
       this.layoutControl1.Name = "layoutControl1";
       this.layoutControl1.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(628, 142, 650, 400);
       this.layoutControl1.Root = this.layoutControlGroup1;
-      this.layoutControl1.Size = new System.Drawing.Size(342, 143);
+      this.layoutControl1.Size = new System.Drawing.Size(342, 167);
       this.layoutControl1.TabIndex = 0;
       this.layoutControl1.Text = "layoutControl1";
       // 
       // btnOK
       // 
       this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-      this.btnOK.Location = new System.Drawing.Point(174, 108);
+      this.btnOK.Location = new System.Drawing.Point(174, 132);
       this.btnOK.Name = "btnOK";
       this.btnOK.Size = new System.Drawing.Size(76, 22);
       this.btnOK.StyleController = this.layoutControl1;
@@ -89,7 +101,7 @@
       // btnCancel
       // 
       this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.btnCancel.Location = new System.Drawing.Point(254, 108);
+      this.btnCancel.Location = new System.Drawing.Point(254, 132);
       this.btnCancel.Name = "btnCancel";
       this.btnCancel.Size = new System.Drawing.Size(76, 22);
       this.btnCancel.StyleController = this.layoutControl1;
@@ -140,6 +152,54 @@
       this.txtDescription.StyleController = this.layoutControl1;
       this.txtDescription.TabIndex = 2;
       // 
+      // cboParentAccount
+      // 
+      this.cboParentAccount.Location = new System.Drawing.Point(72, 108);
+      this.cboParentAccount.Name = "cboParentAccount";
+      this.cboParentAccount.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+      this.cboParentAccount.Properties.DataSource = this.accountNodeBindingSource;
+      this.cboParentAccount.Properties.DisplayMember = "Name";
+      this.cboParentAccount.Properties.NullText = "[Select an account]";
+      this.cboParentAccount.Properties.PopupView = this.gridViewParentAccount;
+      this.cboParentAccount.Properties.ValueMember = "Id";
+      this.cboParentAccount.Size = new System.Drawing.Size(258, 20);
+      this.cboParentAccount.StyleController = this.layoutControl1;
+      this.cboParentAccount.TabIndex = 6;
+      // 
+      // accountNodeBindingSource
+      // 
+      this.accountNodeBindingSource.DataSource = typeof(Finances.AccountNode);
+      // 
+      // gridViewParentAccount
+      // 
+      this.gridViewParentAccount.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colName,
+            this.colType});
+      this.gridViewParentAccount.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+      this.gridViewParentAccount.Name = "gridViewParentAccount";
+      this.gridViewParentAccount.OptionsSelection.EnableAppearanceFocusedCell = false;
+      this.gridViewParentAccount.OptionsView.ShowColumnHeaders = false;
+      this.gridViewParentAccount.OptionsView.ShowGroupPanel = false;
+      this.gridViewParentAccount.OptionsView.ShowIndicator = false;
+      this.gridViewParentAccount.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
+            new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.colName, DevExpress.Data.ColumnSortOrder.Ascending)});
+      this.gridViewParentAccount.CustomRowFilter += new DevExpress.XtraGrid.Views.Base.RowFilterEventHandler(this.gridViewParentAccount_CustomRowFilter);
+      // 
+      // colName
+      // 
+      this.colName.FieldName = "Name";
+      this.colName.Name = "colName";
+      this.colName.Visible = true;
+      this.colName.VisibleIndex = 0;
+      // 
+      // colType
+      // 
+      this.colType.FieldName = "Type";
+      this.colType.Name = "colType";
+      this.colType.Visible = true;
+      this.colType.VisibleIndex = 1;
+      // 
       // layoutControlGroup1
       // 
       this.layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
@@ -151,9 +211,10 @@
             this.layoutControlItem4,
             this.layoutControlItem5,
             this.layoutControlItem6,
-            this.emptySpaceItem1});
+            this.emptySpaceItem1,
+            this.layoutControlItem7});
       this.layoutControlGroup1.Name = "Root";
-      this.layoutControlGroup1.Size = new System.Drawing.Size(342, 143);
+      this.layoutControlGroup1.Size = new System.Drawing.Size(342, 167);
       this.layoutControlGroup1.TextVisible = false;
       // 
       // layoutControlItem1
@@ -195,7 +256,7 @@
       // layoutControlItem5
       // 
       this.layoutControlItem5.Control = this.btnCancel;
-      this.layoutControlItem5.Location = new System.Drawing.Point(242, 96);
+      this.layoutControlItem5.Location = new System.Drawing.Point(242, 120);
       this.layoutControlItem5.Name = "layoutControlItem5";
       this.layoutControlItem5.Size = new System.Drawing.Size(80, 27);
       this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
@@ -204,7 +265,7 @@
       // layoutControlItem6
       // 
       this.layoutControlItem6.Control = this.btnOK;
-      this.layoutControlItem6.Location = new System.Drawing.Point(162, 96);
+      this.layoutControlItem6.Location = new System.Drawing.Point(162, 120);
       this.layoutControlItem6.Name = "layoutControlItem6";
       this.layoutControlItem6.Size = new System.Drawing.Size(80, 27);
       this.layoutControlItem6.TextSize = new System.Drawing.Size(0, 0);
@@ -213,10 +274,19 @@
       // emptySpaceItem1
       // 
       this.emptySpaceItem1.AllowHotTrack = false;
-      this.emptySpaceItem1.Location = new System.Drawing.Point(0, 96);
+      this.emptySpaceItem1.Location = new System.Drawing.Point(0, 120);
       this.emptySpaceItem1.Name = "emptySpaceItem1";
       this.emptySpaceItem1.Size = new System.Drawing.Size(162, 27);
       this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
+      // 
+      // layoutControlItem7
+      // 
+      this.layoutControlItem7.Control = this.cboParentAccount;
+      this.layoutControlItem7.Location = new System.Drawing.Point(0, 96);
+      this.layoutControlItem7.Name = "layoutControlItem7";
+      this.layoutControlItem7.Size = new System.Drawing.Size(322, 24);
+      this.layoutControlItem7.Text = "Parent:";
+      this.layoutControlItem7.TextSize = new System.Drawing.Size(57, 13);
       // 
       // EditAccountDialog
       // 
@@ -224,7 +294,7 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.btnCancel;
-      this.ClientSize = new System.Drawing.Size(342, 143);
+      this.ClientSize = new System.Drawing.Size(342, 167);
       this.Controls.Add(this.layoutControl1);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
       this.Name = "EditAccountDialog";
@@ -235,6 +305,9 @@
       ((System.ComponentModel.ISupportInitialize)(this.numBalance.Properties)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.txtName.Properties)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.txtDescription.Properties)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.cboParentAccount.Properties)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.accountNodeBindingSource)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.gridViewParentAccount)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
@@ -243,6 +316,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
       this.ResumeLayout(false);
 
     }
@@ -264,5 +338,11 @@
     private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
     private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
     private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
+    private DevExpress.XtraLayout.LayoutControlItem layoutControlItem7;
+    private System.Windows.Forms.BindingSource accountNodeBindingSource;
+    private DevExpress.XtraEditors.GridLookUpEdit cboParentAccount;
+    private DevExpress.XtraGrid.Views.Grid.GridView gridViewParentAccount;
+    private DevExpress.XtraGrid.Columns.GridColumn colName;
+    private DevExpress.XtraGrid.Columns.GridColumn colType;
   }
 }

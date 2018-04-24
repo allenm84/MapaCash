@@ -17,24 +17,21 @@ namespace Finances
   {
     static readonly Color BackgroundColor = ColorTranslator.FromHtml("#4A90D9");
 
-    private RecurringTransaction _model = new RecurringTransaction();
-    private HashSet<DateTime> _visibleDates = new HashSet<DateTime>();
-    private bool _modelInitialized = false;
+    private readonly RecurringTransaction _transaction;
+    private readonly HashSet<DateTime> _visibleDates = new HashSet<DateTime>();
+    private bool _isLoaded = false;
 
-    public EditRecurrencePatternDialog()
+    public EditRecurrencePatternDialog(RecurringTransaction data)
     {
       InitializeComponent();
-      _model.Type = RecurringType.Once;
+
+      _transaction = new RecurringTransaction();
+      _transaction.OverwriteWith(data);
+
+      PullFromModel();
     }
 
-    public RecurringTransaction Model => _model;
-
-    public void InitFrom(RecurringTransaction data)
-    {
-      _model.OverwriteWith(data);
-      _modelInitialized = true;
-      UpdateSchedulerControl();
-    }
+    public RecurringTransaction Transaction => _transaction;
 
     private void SetLayoutVisible(BaseLayoutItem item, bool visible, int rowHeight)
     {
@@ -47,51 +44,95 @@ namespace Finances
       row.Height = visible ? rowHeight : 1;
     }
 
+    private void PullFromModel()
+    {
+      recurringDayOfMonthControl1.DayOfMonth1 = _transaction.DayOfMonth;
+      recurringDayOfMonthControl1.DayOfMonth2 = _transaction.DayOfMonth2;
+      recurringWeekDaysControl1.Days = _transaction.Days;
+      recurringEndTypeControl1.UntilDate = _transaction.EndDate;
+      recurringEndTypeControl1.EndType = _transaction.EndType;
+      recurringEndTypeControl1.MaxOccurrences = _transaction.MaxOccurrences;
+      recurringPeriodControl1.Period = _transaction.Period;
+      ctrlFrequency.StartDate = _transaction.StartDate.Date;
+      ctrlFrequency.Frequency = _transaction.Type;
+    }
+
     private void PushToModel()
     {
-      // set the variable for initialization
-      _modelInitialized = true;
+      if (!_isLoaded)
+        return;
 
-      // update the model underneath
       var day1 = (int)recurringDayOfMonthControl1.DayOfMonth1;
       var day2 = (int)recurringDayOfMonthControl1.DayOfMonth2;
-      if (day1 > day2)
-      {
-        var temp = day1;
-        day1 = day2;
-        day2 = temp;
-      }
 
-      _model.DayOfMonth = (RecurringDayOfMonth)day1;
-      _model.DayOfMonth2 = (RecurringDayOfMonth)day2;
-      _model.Days = recurringWeekDaysControl1.Days;
-      _model.EndDate = recurringEndTypeControl1.UntilDate;
-      _model.EndType = recurringEndTypeControl1.EndType;
-      _model.MaxOccurrences = recurringEndTypeControl1.MaxOccurrences;
-      _model.Period = recurringPeriodControl1.Period;
-      _model.StartDate = ctrlFrequency.StartDate.Date;
-
+      // make sure to sanitize semi monthly
       var type = ctrlFrequency.Frequency;
-      if (type == RecurringType.SemiMonthly && (day1 == day2))
+      if (type == RecurringType.SemiMonthly)
       {
-        type = RecurringType.Monthly;
+        if (day1 > day2)
+        {
+          var temp = day1;
+          day1 = day2;
+          day2 = temp;
+        }
+
+        if (day1 == day2)
+        {
+          type = RecurringType.Monthly;
+        }
       }
-      _model.Type = type;
+
+      _transaction.DayOfMonth = (RecurringDayOfMonth)day1;
+      _transaction.DayOfMonth2 = (RecurringDayOfMonth)day2;
+      _transaction.Days = recurringWeekDaysControl1.Days;
+      _transaction.EndDate = recurringEndTypeControl1.UntilDate;
+      _transaction.EndType = recurringEndTypeControl1.EndType;
+      _transaction.MaxOccurrences = recurringEndTypeControl1.MaxOccurrences;
+      _transaction.Period = recurringPeriodControl1.Period;
+      _transaction.StartDate = ctrlFrequency.StartDate.Date;
+      _transaction.Type = type;
       UpdateSchedulerControl();
     }
 
     private void UpdateSchedulerControl()
     {
+      // if we're not loaded...
+      if (!_isLoaded)
+        return;
+
       // set the schedule date
-      schedulerControl1.Start = _model.StartDate;
-      schedulerControl1.LimitInterval.Start = _model.StartDate;
-      schedulerControl1.LimitInterval.End = _model.StartDate.AddYears(100);
+      schedulerControl1.Start = _transaction.StartDate;
+      schedulerControl1.LimitInterval.Start = _transaction.StartDate;
+      schedulerControl1.LimitInterval.End = _transaction.StartDate.AddYears(100);
+      UpdateVisibleDates();
+    }
+
+    private void UpdateVisibleDates()
+    {
+      _visibleDates.Clear();
+
+      var date = _transaction.GetNextDate(out bool isValid);
+      if (_transaction.Type == RecurringType.Once)
+      {
+        _visibleDates.Add(date.Date);
+      }
+      else if (isValid)
+      {
+        foreach (var d in _transaction.GenerateDates(date, schedulerControl1.LimitInterval.End))
+        {
+          _visibleDates.Add(d);
+        }
+      }
+
+      schedulerControl1.MonthView.Invalidate();
     }
 
     protected override void OnLoad(EventArgs e)
     {
       base.OnLoad(e);
-      ctrlFrequency.Frequency = _model.Type;
+      ctrlFrequency.Frequency = _transaction.Type;
+      _isLoaded = true;
+      UpdateSchedulerControl();
     }
 
     private void ctrlFrequency_FrequencyChanged(object sender, EventArgs e)
@@ -135,29 +176,6 @@ namespace Finances
     private void ctrlSchedule_PopupMenuShowing(object sender, DevExpress.XtraScheduler.PopupMenuShowingEventArgs e)
     {
       e.Menu.Items.Clear();
-    }
-
-    private void schedulerControl1_VisibleIntervalChanged(object sender, EventArgs e)
-    {
-      if (!_modelInitialized)
-        return;
-
-      _visibleDates.Clear();
-
-      var date = _model.GetNextDate(out bool isValid);
-      if (_model.Type == RecurringType.Once)
-      {
-        _visibleDates.Add(date.Date);
-      }
-      else if (isValid)
-      {
-        foreach (var d in _model.GenerateDates(date, schedulerControl1.LimitInterval.End))
-        {
-          _visibleDates.Add(d);
-        }
-      }
-
-      schedulerControl1.MonthView.Invalidate();
     }
 
     private void schedulerControl1_CustomDrawDayHeader(object sender, CustomDrawObjectEventArgs e)

@@ -10,37 +10,12 @@ namespace Finances
 {
   public abstract class BaseTreeListNode : BaseNotifyPropertyChanged
   {
-    private readonly HashSet<BaseTreeListNode> _children;
-    private BaseTreeListNode _parent;
-
-    public BaseTreeListNode()
-    {
-      _children = new HashSet<BaseTreeListNode>(BaseTreeListNodeEqualityComparer.Instance);
-      Id = IdGenerator.Next;
-    }
-
-    public string Id { get; }
-    public string ParentId => _parent?.Id;
-
-    public BaseTreeListNode Parent => _parent;
-
-    public IEnumerable<BaseTreeListNode> Children => _children;
-
-    protected virtual void OnNodeAdded(BaseTreeListNode node)
-    {
-    }
-
-    protected virtual void OnNodeRemoved(BaseTreeListNode node)
-    {
-    }
+    public string Id { get; set; } = $"{Guid.NewGuid():N}";
+    public string ParentId { get; set; }
 
     public void Add(BaseTreeListNode node)
     {
-      if (_children.Add(node))
-      {
-        node._parent = this;
-        OnNodeAdded(node);
-      }
+      node.ParentId = Id;
     }
 
     public bool Remove(BaseTreeListNode node)
@@ -50,14 +25,8 @@ namespace Finances
         return false;
       }
 
-      if (_children.Remove(node))
-      {
-        node._parent = null;
-        OnNodeRemoved(node);
-        return true;
-      }
-
-      return false;
+      node.ParentId = null;
+      return true;
     }
   }
 }
