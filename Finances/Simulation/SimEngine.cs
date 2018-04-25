@@ -76,18 +76,31 @@ namespace Finances
         {
           // if we're going from checking/savings, it is a bad thing (taking money out),
           // but its a good thing for everything else
-          from.Decrease(date, t.Name, to.Id, amount);
           switch (to.Type)
           {
             case AccountType.Income:
             case AccountType.Savings:
             case AccountType.Checking:
+              from.Decrease(date, t.Name, to.Id, amount);
               to.Increase(date, t.Name, from.Id, amount);
               break;
-            case AccountType.CreditCard:
             case AccountType.Expense:
-            case AccountType.Liability:
+              from.Decrease(date, t.Name, to.Id, amount);
               to.Decrease(date, t.Name, from.Id, amount);
+              break;
+            case AccountType.CreditCard:
+            case AccountType.Liability:
+              var newBalance = to.Balance - amount;
+              if (newBalance < 0)
+              {
+                amount += newBalance;
+              }
+
+              if (amount > 0)
+              {
+                from.Decrease(date, t.Name, to.Id, amount);
+                to.Decrease(date, t.Name, from.Id, amount);
+              }
               break;
           }
         }
